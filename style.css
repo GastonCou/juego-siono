@@ -1,11 +1,13 @@
-/* Fuente de Google Fonts (agregamos en el HTML también) */
+/* style.css actualizado con estilo institucional Caja de Catamarca */
+
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap');
 
 body {
+  font-family: 'Rubik', sans-serif;
+  background-color: #0C2150; /* Azul oscuro institucional */
+  color: #ffffff;
   margin: 0;
   padding: 0;
-  font-family: 'Rubik', sans-serif;
-  background: linear-gradient(135deg, #e0f7fa, #e1bee7);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,53 +15,74 @@ body {
 }
 
 .container {
-  background: white;
-  padding: 2rem 3rem;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
   text-align: center;
-  transition: all 0.3s ease-in-out;
+  color: #0C2150;
+  position: relative;
+}
+
+.container::before {
+  content: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Dice-1-b.svg/64px-Dice-1-b.svg.png');
+  position: absolute;
+  top: -32px;
+  left: 20px;
+  width: 32px;
+  height: 32px;
+}
+
+.container::after {
+  content: url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Dice-2-b.svg/64px-Dice-2-b.svg.png');
+  position: absolute;
+  top: -32px;
+  right: 20px;
+  width: 32px;
+  height: 32px;
 }
 
 h1 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  color: #333;
+  font-size: 2.2em;
+  margin-bottom: 20px;
+  color: #0C2150;
 }
 
 .question {
-  font-size: 1.3rem;
-  margin: 1.5rem 0;
-  color: #444;
+  font-size: 1.4em;
+  margin-bottom: 30px;
 }
 
 button {
-  font-size: 1rem;
-  padding: 0.8rem 2rem;
-  margin: 0.5rem;
+  font-family: 'Rubik', sans-serif;
+  font-size: 1.1em;
+  margin: 10px;
+  padding: 12px 25px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  background-color: #4caf50;
-  color: white;
-  transition: background-color 0.2s ease;
+  background-color: #C7D300; /* Verde lima institucional */
+  color: #0C2150;
+  font-weight: 600;
+  transition: background-color 0.2s;
 }
 
 button:hover {
-  background-color: #388e3c;
-}
-
-button:nth-of-type(2) {
-  background-color: #f44336;
-}
-
-button:nth-of-type(2):hover {
-  background-color: #d32f2f;
+  background-color: #A4B500;
 }
 
 #feedback {
-  margin-top: 1.2rem;
+  margin-top: 20px;
+  font-size: 1.1em;
   font-weight: 600;
-  font-size: 1.1rem;
+}
+
+.correct {
+  color: #4CAF50; /* Verde correcto */
+}
+
+.incorrect {
+  color: #FF3B30; /* Rojo error */
 }
