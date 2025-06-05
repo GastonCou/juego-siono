@@ -128,12 +128,12 @@
 
   <script>
     const items = [
-      '🥟', '🥟',
-      '🧉', '🧉',
-      '🧵', '🧵',
-      '🕍', '🕍',
-      '🎶', '🎶',
-      '🏞️', '🏞️'
+      'Empanada.png', 'Empanada.png',
+      'Mate.png', 'Mate.png',
+      'Poncho.png', 'Poncho.png',
+      'Catedral.png', 'Catedral.png',
+      'Guitarra.png', 'Guitarra.png',
+      'Campo.png', 'Campo.png'
     ];
 
     let grid = document.getElementById('grid');
@@ -185,7 +185,7 @@
     function flipCard() {
       if (lock || this.classList.contains('flipped')) return;
       this.classList.add('flipped');
-      this.textContent = this.dataset.value;
+      this.innerHTML = `<img src=\"${this.dataset.value}\" alt=\"\" style=\"width: 80%; height: 80%; object-fit: contain;\" />`;
 
       if (!firstCard) {
         firstCard = this;
@@ -207,8 +207,8 @@
           setTimeout(() => {
             firstCard.classList.remove('flipped');
             secondCard.classList.remove('flipped');
-            firstCard.textContent = '';
-            secondCard.textContent = '';
+            firstCard.innerHTML = '';
+            secondCard.innerHTML = '';
             resetTurn();
           }, 1000);
         }
