@@ -16,6 +16,7 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     h1 {
@@ -60,10 +61,11 @@
 
     #result {
       margin-top: 30px;
-      font-size: 1.4em;
+      font-size: 1.6em;
       color: #0C2150;
       font-weight: bold;
       text-align: center;
+      z-index: 2;
     }
 
     #result.win {
@@ -86,10 +88,31 @@
       border-radius: 8px;
       cursor: pointer;
       font-size: 1rem;
+      z-index: 2;
     }
 
     #back-btn:hover {
       background-color: #091832;
+    }
+
+    .confetti {
+      position: fixed;
+      width: 8px;
+      height: 14px;
+      opacity: 0.8;
+      z-index: 10;
+      animation: fall 3s linear forwards;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
     }
   </style>
 </head>
@@ -141,6 +164,22 @@
       });
     }
 
+    function launchConfetti() {
+      const colors = ['#f44336', '#ffeb3b', '#2196f3', '#4caf50'];
+      for (let i = 0; i < 120; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * window.innerWidth + 'px';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+        confetti.style.animationDuration = `${Math.random() * 2 + 2}s`;
+        confetti.style.width = `${Math.random() * 8 + 4}px`;
+        confetti.style.height = `${Math.random() * 12 + 8}px`;
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 4000);
+      }
+    }
+
     function flipCard() {
       if (lock || this.classList.contains('flipped')) return;
       this.classList.add('flipped');
@@ -159,6 +198,7 @@
           if (matches === items.length / 2) {
             result.textContent = '🎉 ¡Ganaste!';
             result.classList.add('win');
+            launchConfetti();
           }
         } else {
           wrongSound.play();
