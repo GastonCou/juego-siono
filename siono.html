@@ -15,8 +15,17 @@
       font-weight: bold;
     }
 
+    .content-area {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 300px;
+    }
+
     .question {
       font-size: 1.8em;
+      text-align: center;
       margin-bottom: 30px;
       min-height: 80px;
     }
@@ -26,6 +35,7 @@
       font-size: 1.4em;
       font-weight: 600;
       min-height: 40px;
+      text-align: center;
     }
 
     .top-button {
@@ -57,11 +67,15 @@
       <div class="score">📊 Puntaje: <span id="score">0</span></div>
     </div>
 
-    <div class="question" id="question">¿El sol es una estrella?</div>
+    <div class="content-area">
+      <div class="question" id="question">¿El sol es una estrella?</div>
+    </div>
+
     <div>
       <button onclick="answer(true)">Sí</button>
       <button onclick="answer(false)">No</button>
     </div>
+
     <div id="feedback"></div>
     <button id="restart-btn" onclick="restartGame()">🔄 Reiniciar</button>
   </div>
