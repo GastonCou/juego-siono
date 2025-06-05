@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Sí o No</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    .header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    .content-area {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 300px;
+    }
+
+    .question {
+      font-size: 1.8em;
+      text-align: center;
+      margin-bottom: 30px;
+      min-height: 80px;
+    }
+
+    #feedback {
+      margin-top: 30px;
+      font-size: 1.4em;
+      font-weight: 600;
+      min-height: 40px;
+      text-align: center;
+    }
+
+    .top-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 0.9em;
+      padding: 6px 14px;
+      background-color: transparent;
+      border: 2px solid #0C2150;
+      color: #0C2150;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .top-button:hover {
+      background-color: #0C2150;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="top-button" onclick="location.href='index.html'">⬅ Volver al menú</button>
+    <h1>Juego: SÍ o NO</h1>
+
+    <div class="header">
+      <div class="timer">⏱ Tiempo: <span id="time">30</span>s</div>
+      <div class="score">📊 Puntaje: <span id="score">0</span></div>
+    </div>
+
+    <div class="content-area">
+      <div class="question" id="question">¿El sol es una estrella?</div>
+    </div>
+
+    <div>
+      <button onclick="answer(true)">Sí</button>
+      <button onclick="answer(false)">No</button>
+    </div>
+
+    <div id="feedback"></div>
+    <button id="restart-btn" onclick="restartGame()">🔄 Reiniciar</button>
+  </div>
+
+  <audio id="correctSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_d12d0d50b4.mp3"></audio>
+  <audio id="wrongSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_a5cfa610d4.mp3"></audio>
+
+  <script>
+    const questions = [
+      { text: '¿El sol es una estrella?', answer: true },
+      { text: '¿2 + 2 = 5?', answer: false },
+      { text: '¿La Tierra tiene dos lunas?', answer: false },
+      { text: '¿Los perros pueden oír ultrasonidos?', answer: true },
+      { text: '¿El agua hierve a 100°C?', answer: true }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timeLeft = 30;
+    let timer;
+
+    const questionEl = document.getElementById('question');
+    const scoreEl = document.getElementById('score');
+    const timeEl = document.getElementById('time');
+    const feedbackEl = document.getElementById('feedback');
+    const correctSound = document.getElementById('correctSound');
+    const wrongSound = document.getElementById('wrongSound');
+
+    function showQuestion() {
+      if (current < questions.length) {
+        questionEl.textContent = questions[current].text;
+        feedbackEl.textContent = '';
+      } else {
+        questionEl.textContent = '¡Juego terminado!';
+        feedbackEl.innerHTML = `🎉 Tu puntaje final es <strong>${score}</strong> de ${questions.length}`;
+        clearInterval(timer);
+      }
+    }
+
+    function answer(response) {
+      if (current >= questions.length) return;
+
+      const correct = questions[current].answer === response;
+      if (correct) {
+        score++;
+        scoreEl.textContent = score;
+        feedbackEl.textContent = '✅ ¡Correcto!';
+        feedbackEl.className = 'correct';
+        correctSound.play();
+      } else {
+        feedbackEl.textContent = '❌ Incorrecto';
+        feedbackEl.className = 'incorrect';
+        wrongSound.play();
+      }
+      current++;
+      setTimeout(showQuestion, 1000);
+    }
+
+    function startTimer() {
+      timer = setInterval(() => {
+        timeLeft--;
+        timeEl.textContent = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          questionEl.textContent = '⏱ ¡Se acabó el tiempo!';
+          feedbackEl.innerHTML = `🎉 Tu puntaje final es <strong>${score}</strong> de ${questions.length}`;
+        }
+      }, 1000);
+    }
+
+    function restartGame() {
+      current = 0;
+      score = 0;
+      timeLeft = 30;
+      scoreEl.textContent = score;
+      timeEl.textContent = timeLeft;
+      showQuestion();
+      clearInterval(timer);
+      startTimer();
+    }
+
+    showQuestion();
+    startTimer();
+  </script>
+</body>
+</html>
