@@ -127,18 +127,23 @@
     }
 
     function createBoard() {
-      const shuffled = order.slice().sort(() => Math.random() - 0.5);
-      shuffled.forEach(i => {
-        const div = document.createElement('div');
-        div.className = 'piece';
-        div.style.backgroundImage = 'url("puzzle.jpg")';
-        div.style.backgroundPosition = `-${(i % 3) * 100}px -${Math.floor(i / 3) * 100}px`;
-        div.setAttribute('draggable', true);
-        div.dataset.index = i;
-        container.appendChild(div);
-        pieces.push(div);
-      });
-    }
+  const shuffled = order.slice().sort(() => Math.random() - 0.5);
+
+  // Selección aleatoria de imagen
+  const puzzles = ['puzzle1.jpg', 'puzzle2.jpg', 'puzzle3.jpg'];
+  const selectedPuzzle = puzzles[Math.floor(Math.random() * puzzles.length)];
+
+  shuffled.forEach(i => {
+    const div = document.createElement('div');
+    div.className = 'piece';
+    div.style.backgroundImage = `url("${selectedPuzzle}")`;
+    div.style.backgroundPosition = `-${(i % 3) * 100}px -${Math.floor(i / 3) * 100}px`;
+    div.setAttribute('draggable', true);
+    div.dataset.index = i;
+    container.appendChild(div);
+    pieces.push(div);
+  });
+}
 
     function checkWin() {
       const current = Array.from(container.children).map(el => parseInt(el.dataset.index));
