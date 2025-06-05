@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Rompecabezas Catamarca</title>
+  <style>
+    body {
+      font-family: 'Rubik', sans-serif;
+      background-color: #fdfaf4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 {
+      color: #0C2150;
+    }
+    #puzzle-container {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-template-rows: repeat(3, 100px);
+      gap: 2px;
+      margin-top: 20px;
+    }
+    .piece {
+      width: 100px;
+      height: 100px;
+      background-size: 300px 300px;
+      border: 1px solid #ccc;
+      box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>Rompecabezas Catamarca 🧩</h1>
+  <p>Arrastrá las piezas para formar la imagen</p>
+  <div id="puzzle-container"></div>
+  <script>
+    const container = document.getElementById('puzzle-container');
+    const order = [0,1,2,3,4,5,6,7,8];
+    const shuffled = order.slice().sort(() => Math.random() - 0.5);
+
+    shuffled.forEach(i => {
+      const div = document.createElement('div');
+      div.className = 'piece';
+      div.style.backgroundImage = 'url("puzzle.jpg")';
+      div.style.backgroundPosition = `-${(i % 3) * 100}px -${Math.floor(i / 3) * 100}px`;
+      div.setAttribute('draggable', true);
+      div.dataset.index = i;
+      container.appendChild(div);
+    });
+
+    let dragSrcEl = null;
+
+    container.addEventListener('dragstart', e => {
+      if (e.target.classList.contains('piece')) {
+        dragSrcEl = e.target;
+      }
+    });
+
+    container.addEventListener('dragover', e => {
+      e.preventDefault();
+    });
+
+    container.addEventListener('drop', e => {
+      if (e.target.classList.contains('piece') && dragSrcEl !== e.target) {
+        const srcIndex = dragSrcEl.dataset.index;
+        const tgtIndex = e.target.dataset.index;
+
+        const temp = document.createElement('div');
+        temp.innerHTML = dragSrcEl.outerHTML;
+        dragSrcEl.outerHTML = e.target.outerHTML;
+        e.target.outerHTML = temp.innerHTML;
+
+        const pieces = container.querySelectorAll('.piece');
+        pieces.forEach((piece, i) => piece.dataset.index = i);
+      }
+    });
+  </script>
+</body>
+</html>
